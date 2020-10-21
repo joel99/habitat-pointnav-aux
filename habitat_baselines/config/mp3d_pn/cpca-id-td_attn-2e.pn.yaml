@@ -1,0 +1,59 @@
+CHECKPOINT_FOLDER: "/srv/share/jye72/mp3d_pn/"
+LOG_FILE: "runs/mp3d_pn/"
+TENSORBOARD_DIR: "tb/mp3d_pn/"
+VIDEO_DIR: "/srv/share/jye72/vis/videos/mp3d_pn/"
+
+BASE_TASK_CONFIG_PATH: "configs/tasks/noisy_pn_mp3d.yaml"
+TRAINER_NAME: "ppo"
+ENV_NAME: "NavRLEnv"
+SIMULATOR_GPU_ID: 0
+TORCH_GPU_ID: 0
+VIDEO_OPTION: [] # ["disk"]
+TEST_EPISODE_COUNT: -1
+NUM_PROCESSES: 4
+SENSORS: ["RGB_SENSOR"]
+NUM_UPDATES: 80001
+LOG_INTERVAL: 50
+CHECKPOINT_INTERVAL: 1000
+
+RL:
+  COVERAGE_REWARD: .2
+  PPO:
+    clip_param: 0.1
+    ppo_epoch: 4
+    num_mini_batch: 2
+    value_loss_coef: 0.5
+    entropy_coef: 0.01
+    aux_loss_coef: 2.0
+    lr: 2.5e-4
+    eps: 1e-5
+    max_grad_norm: 0.5
+    num_steps: 128
+    hidden_size: 228
+    use_gae: True
+    gamma: 0.99
+    tau: 0.95
+    use_linear_clip_decay: False
+    use_linear_lr_decay: False
+    use_normalized_advantage: False # This was off for the first run
+    reward_window_size: 50
+    policy: "ATTENTIVE_BELIEF"
+  AUX_TASKS:
+    tasks: ["CPCA", "CPCA_A", "CPCA_B", "CPCA_C", "CPCA_D", "InverseDynamicsTask", "TemporalDistanceTask"]
+    entropy_coef: 0.01 # 0.005 doesn't work anymore
+    CPCA:
+      num_steps: 1
+    FPCTask_A:
+      num_steps: 2
+    FPCTask_B:
+      num_steps: 4
+    FPCTask_C:
+      num_steps: 8
+    FPCTask_D:
+      num_steps: 16
+    InverseDynamicsTask:
+      loss_factor: 0.05
+      subsample_rate: 0.2
+    TemporalDistanceTask:
+      loss_factor: 0.2
+      num_pairs: 8
