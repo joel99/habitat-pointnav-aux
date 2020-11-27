@@ -40,12 +40,10 @@ To generate a json with more detailed evaluation information (e.g. actions taken
 ## References and Citation
 If you use this work, you can cite it as
 ```
-@misc{ye2020auxiliary,
+@inproceedings{ye2020auxiliary,
     title={Auxiliary Tasks Speed Up Learning PointGoal Navigation},
     author={Joel Ye and Dhruv Batra and Erik Wijmans and Abhishek Das},
     year={2020},
-    eprint={2007.04561},
-    archivePrefix={arXiv},
-    primaryClass={cs.CV}
+    booktitle={Proceedings of the Conference on Robot Learning (CoRL)}
 }
 ```
